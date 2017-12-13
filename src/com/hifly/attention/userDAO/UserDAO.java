@@ -1,4 +1,4 @@
-package com.HIFLY.Attention.userDAO;
+package com.hifly.attention.userDAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.HIFLY.Attention.client.User;
-import com.HIFLY.Attention.debuger.Debuger;
+import com.hifly.attention.client.User;
+import com.hifly.attention.debuger.Debuger;
 
 public class UserDAO {
 	private Connection connection = null;

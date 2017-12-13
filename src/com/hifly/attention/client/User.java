@@ -1,20 +1,22 @@
-package com.HIFLY.Attention.client;
+package com.hifly.attention.client;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.UUID;
 
-import com.HIFLY.Attention.debuger.Debuger;
+import com.hifly.attention.debuger.Debuger;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
+@Setter
 @ToString
 public class User {
-	private String name;
 	private String uuid;//개인 식별자로 사용 예정
+	private String name;
 	private String ip;
 	private boolean isLogin;
 	private Socket socket;
@@ -33,12 +35,6 @@ public class User {
 		}
 		isLogin = true;
 	}
-	public String getUuid() {
-		return uuid;
-	}
-	public Socket getSocket() {
-		return socket;
-	}
 	public void sendInt(int port) {
 		try {
 			dos.writeInt(port);
@@ -56,35 +52,11 @@ public class User {
 		}
 		return null;
 	}
-
 	public void sendUTF(String message) {
 		try {
 			dos.writeUTF(message);
 		} catch (IOException e) {
 			Debuger.printError(e);
 		}
-	}
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
-	public boolean isLogin() {
-		return isLogin;
-	}
-
-	public void setLogin(boolean isLogin) {
-		this.isLogin = isLogin;
 	}
 }
