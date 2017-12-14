@@ -1,8 +1,10 @@
 package com.hifly.attention.client;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.net.Socket;
+
+import java.util.Iterator;
+import java.util.UUID;
 import java.util.Vector;
+
+import com.hifly.attention.serverCore.Server;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,8 +14,36 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Room {
-	private Vector<User> users;
-	public void addUser(User user) {
-		users.add(user);
+	private String uuid;
+	private Vector<String> users;
+
+	public Room() {
+		uuid = UUID.randomUUID().toString().replace("-", "");
+	}
+
+	public void addUser(String Uuid) {
+		users.add(Uuid);
+	}
+
+	public void broadcast(String message) {
+		for (int i = 0; i < users.size(); i++) {
+			User user = Server.users.get(users.get(i));
+			user.sendUTF(message);
+		}
+	}
+
+	public String removeUser(String Uuid) {
+		for (int i = 0; i < users.size(); i++) {
+			if (users.get(i).equals(Uuid)) {
+				users.remove(i);
+				return "userRemove";
+			}
+		}
+
+		if (users.size() == 0) {
+			return "roomRemove";
+		}
+
+		return "fali";
 	}
 }

@@ -1,5 +1,5 @@
 package com.hifly.attention.values;
 
 public interface UnChangableValues {
-	public int SERVER_PORT = 10035;
+	public static final int SERVER_PORT = 10035;
 }

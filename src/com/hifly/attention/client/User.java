@@ -15,9 +15,11 @@ import lombok.ToString;
 @Setter
 @ToString
 public class User {
-	private String uuid;//개인 식별자로 사용 예정
+	private String uuid;
 	private String name;
-	private String ip;
+	private String stateMessage;
+	private String tel;
+	private final String ip;
 	private boolean isLogin;
 	private Socket socket;
 	private DataInputStream dis;
@@ -26,7 +28,7 @@ public class User {
 	public User(Socket socket) {
 		this.socket = socket;
 		this.ip = socket.getInetAddress().getHostAddress();
-		uuid = UUID.randomUUID().toString().replace("-", "");
+		//uuid = UUID.randomUUID().toString().replace("-", "");
 		try {
 			dis = new DataInputStream(socket.getInputStream());
 			dos = new DataOutputStream(socket.getOutputStream());
@@ -55,6 +57,14 @@ public class User {
 	public void sendUTF(String message) {
 		try {
 			dos.writeUTF(message);
+		} catch (IOException e) {
+			Debuger.printError(e);
+		}
+	}
+	
+	public void disConnection(){
+		try {
+			socket.close();
 		} catch (IOException e) {
 			Debuger.printError(e);
 		}
