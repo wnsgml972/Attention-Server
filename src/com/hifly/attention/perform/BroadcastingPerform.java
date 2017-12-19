@@ -24,10 +24,9 @@ public class BroadcastingPerform implements SignalPerform {
 	
 	@Override
 	public void performAction(SignalKey signalKey) {
-		String split[] = signalKey.getProtocol().split(Protocol.SPLIT_MESSAGE);
-		Debuger.log(this.toString(), split[1] + "   broadcast");
-		String messageVal = split[1];
-		broadcast(messageVal);
+		String bodyData = signalKey.getBodyData();
+		Debuger.log(this.toString(), bodyData);
+		broadcast(bodyData);
 	}
 	
 	private void broadcast(String message){

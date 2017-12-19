@@ -8,5 +8,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class SignalKey {
-	private String protocol;
+	private String headerProtocol;
+	private String bodyData;
 }

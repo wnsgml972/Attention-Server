@@ -1,6 +1,5 @@
 package com.hifly.attention.client;
 
-import java.util.Iterator;
 import java.util.UUID;
 import java.util.Vector;
 
@@ -14,11 +13,16 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Room {
-	private String uuid;
+	
+	private String roomUuid;
+	private String title;
+	private String content;
+	private String time;
+	
 	private Vector<String> users;
 
 	public Room() {
-		uuid = UUID.randomUUID().toString().replace("-", "");
+		roomUuid = UUID.randomUUID().toString().replace("-", "");
 	}
 
 	public void addUser(String Uuid) {

@@ -22,11 +22,14 @@ public class UserEnrollPerform implements SignalPerform {
 	
 	@Override
 	public void performAction(SignalKey signalKey) {
-		String split[] = signalKey.getProtocol().split(Protocol.SPLIT_MESSAGE);
-		String name = split[1];
-		String uuid = split[2];
-		String stateMessage = split[3];
-		String tel = split[4];
+		String bodyData = signalKey.getBodyData();
+		Debuger.log(this.toString(), bodyData);
+		
+		String split[] = bodyData.split(Protocol.SPLIT_MESSAGE);
+		String name = split[0];
+		String uuid = split[1];
+		String stateMessage = split[2];
+		String tel = split[3];
 		
 		if(Server.alreadyExistUser(uuid)){
 			Debuger.log(this.toString(), user + " Á¢¼Ó!  start");

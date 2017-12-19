@@ -3,6 +3,7 @@ package com.hifly.attention.perform;
 import java.util.HashMap;
 
 import com.hifly.attention.client.User;
+import com.hifly.attention.debuger.Debuger;
 import com.hifly.attention.serverCore.Server;
 import com.hifly.attention.serverCore.SignalKey;
 import com.hifly.attention.serverCore.SignalPerform;
@@ -23,9 +24,11 @@ public class CallingPerform implements SignalPerform {
 	
 	@Override
 	public void performAction(SignalKey signalKey) {
-		String split[] = signalKey.getProtocol().split(Protocol.SPLIT_MESSAGE);
+		String bodyData = signalKey.getBodyData();
+		Debuger.log(this.toString(), bodyData);
 		HashMap<String, User> users = Server.users;
-		User opponent_user = users.get(split[1]);
+		User opponent_user = users.get(bodyData);
+		
 		if (user != null) {
 			user.sendUTF(opponent_user.getIp());
 		} else {

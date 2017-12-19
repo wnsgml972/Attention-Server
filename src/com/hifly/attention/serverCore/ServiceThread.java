@@ -23,8 +23,11 @@ public class ServiceThread extends Thread {
 		user = new User(socket);
 		Debuger.log(this.toString(), "Thread : " + Thread.activeCount());
 		
-		signalPerformHashMap = new HashMap<String, SignalPerform>();
 		
+		/* Init signalPerformHashMap */
+		signalPerformHashMap = new HashMap<String, SignalPerform>();		
+				
+		//Put Perform Class
 		signalPerformHashMap.put(Protocol.USER_ENROLL_PROTOCOL, new UserEnrollPerform(user));
 		signalPerformHashMap.put(Protocol.USER_FRIENDS_REQUEST_PROTOCOL, new UserFriendsRequestPerform(user));
 		signalPerformHashMap.put(Protocol.ROOM_MESSAGE_PROTOCOL, new RoomMessagePerform(user));
@@ -32,6 +35,8 @@ public class ServiceThread extends Thread {
 		signalPerformHashMap.put(Protocol.ROOM_OUT_PROTOCOL, new RoomOutPerform(user));
 		signalPerformHashMap.put(Protocol.CALLING, new CallingPerform(user));
 		signalPerformHashMap.put(Protocol.BROADCAST, new BroadcastingPerform(user));
+		
+		
 	}
 	
 	public void run() {
@@ -49,12 +54,14 @@ public class ServiceThread extends Thread {
 			
 
 			SignalKey signalKey = new SignalKey();
-			String protocolHeader = message.split(Protocol.SPLIT_MESSAGE)[0];
-			signalKey.setProtocol(protocolHeader);
-			Debuger.log(this.toString(), "Init protocol header  :  " + protocolHeader);
+			String headerProtocol = message.split(Protocol.SPLIT_MESSAGE)[0];
+			String bodyData = message.substring(headerProtocol.length() + Protocol.SPLIT_MESSAGE.length());
+			signalKey.setHeaderProtocol(headerProtocol);
+			signalKey.setBodyData(bodyData);
+			Debuger.log(this.toString(), "Init protocol header  :  " + headerProtocol);			
 			
-			SignalPerform performClass = signalPerformHashMap.get(signalKey.getProtocol());
-			performClass.performAction(signalKey);			
+			SignalPerform performClass = signalPerformHashMap.get(headerProtocol);
+			performClass.performAction(signalKey);
 		}
 	}
 }

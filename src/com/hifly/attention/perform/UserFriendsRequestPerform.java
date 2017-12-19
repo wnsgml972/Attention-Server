@@ -12,6 +12,7 @@ import com.hifly.attention.values.Protocol;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 public class UserFriendsRequestPerform implements SignalPerform {
@@ -24,11 +25,16 @@ public class UserFriendsRequestPerform implements SignalPerform {
 	
 	@Override
 	public void performAction(SignalKey signalKey) {
-		String split[] = signalKey.getProtocol().split(Protocol.SPLIT_MESSAGE);
+		
+		String bodyData = signalKey.getBodyData();
+		Debuger.log(this.toString(), bodyData);
+		
+		String split[] = bodyData.split(Protocol.SPLIT_MESSAGE);
+		
 		StringBuilder sb = new StringBuilder("");
 		sb.append(Protocol.USER_FRIENDS_RESPONSE_PROTOCOL + Protocol.SPLIT_MESSAGE);
-		Debuger.log(toString(), Integer.toString(Server.users.size()));				
-		for(int i=1; i<split.length; i++) {
+		Debuger.log(toString(), "Ä£±¸ ¼ö : " + Integer.toString(Server.users.size()));
+		for(int i=0; i<split.length; i++) {
 			Iterator<String> it = Server.users.keySet().iterator();
 			while(it.hasNext()) {
 				String key = it.next();

@@ -22,9 +22,10 @@ public class RoomOutPerform implements SignalPerform {
 	
 	@Override
 	public void performAction(SignalKey signalKey) {
-		String split[] = signalKey.getProtocol().split(Protocol.SPLIT_MESSAGE);
-		Debuger.log(this.toString(), split[1] + "  roomOut");
-		String roomUuid = split[1];
+		String bodyData = signalKey.getBodyData();
+		Debuger.log(this.toString(), bodyData);
+		
+		String roomUuid = bodyData;
 		
 		Server.removeRooms(user.getUuid(), roomUuid);
 	}

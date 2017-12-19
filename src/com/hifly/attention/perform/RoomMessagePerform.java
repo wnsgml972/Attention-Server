@@ -22,11 +22,14 @@ public class RoomMessagePerform implements SignalPerform {
 	
 	@Override
 	public void performAction(SignalKey signalKey) {
-		String split[] = signalKey.getProtocol().split(Protocol.SPLIT_MESSAGE);
+		String bodyData = signalKey.getBodyData();
+		Debuger.log(this.toString(), bodyData);
+		
+		String split[] = bodyData.split(Protocol.SPLIT_MESSAGE);
+		Debuger.log(this.toString(), split[0] + "  room");
 		Debuger.log(this.toString(), split[1] + "  room");
-		Debuger.log(this.toString(), split[2] + "  room");
-		String roomUuid = split[1];
-		String messageVal = split[2];
+		String roomUuid = split[0];
+		String messageVal = split[1];
 		
 		Server.rooms.get(roomUuid).broadcast(messageVal);
 	}

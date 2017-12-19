@@ -17,10 +17,10 @@ import lombok.ToString;
 public class User {
 	private String uuid;
 	private String name;
-	private String stateMessage;
 	private String tel;
+	private String stateMessage;
 	private final String ip;
-	private boolean isLogin;
+	
 	private Socket socket;
 	private DataInputStream dis;
 	private DataOutputStream dos;
@@ -35,8 +35,8 @@ public class User {
 		} catch (Exception e) {
 			Debuger.printError(e);
 		}
-		isLogin = true;
 	}
+	
 	public void sendInt(int port) {
 		try {
 			dos.writeInt(port);

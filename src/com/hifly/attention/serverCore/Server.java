@@ -78,7 +78,7 @@ public class Server {
 		while(it.hasNext()){
 			String key = it.next();
 			Room room = rooms.get(key);
-			if(roomUuid.equals(room.getUuid())){
+			if(roomUuid.equals(room.getRoomUuid())){
 				
 				String result = room.removeUser(userUuid);	//유저 제거
 				
