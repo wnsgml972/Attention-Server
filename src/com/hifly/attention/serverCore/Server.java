@@ -90,7 +90,7 @@ public class Server {
 					rooms.remove(roomUuid);
 					Debuger.log("Server", "remove Room success");
 				}else{
-					Debuger.log("Server", "remove User fail");					
+					Debuger.log("Server", "remove User fail");
 				}				
 			}
 		}

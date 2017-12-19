@@ -13,5 +13,7 @@ public interface Protocol {
 	public static final String ROOM_IN_FIRST_PROTOCOL = "roomIn";
 	public static final String ROOM_OUT_PROTOCOL = "roomOut";
 	public static final String SPLIT_MESSAGE = "@segment@";
+	public static final String BROADCAST = "broadcast";
+	public static final String CALLING = "calling";
 	
 }
