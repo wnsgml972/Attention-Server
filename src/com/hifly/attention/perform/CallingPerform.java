@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import com.hifly.attention.client.User;
 import com.hifly.attention.debuger.Debuger;
-import com.hifly.attention.serverCore.Server;
+import com.hifly.attention.serverCore.MessageServer;
 import com.hifly.attention.serverCore.SignalKey;
 import com.hifly.attention.serverCore.SignalPerform;
 import com.hifly.attention.values.Protocol;
@@ -26,7 +26,7 @@ public class CallingPerform implements SignalPerform {
 	public void performAction(SignalKey signalKey) {
 		String bodyData = signalKey.getBodyData();
 		Debuger.log(this.toString(), bodyData);
-		HashMap<String, User> users = Server.users;
+		HashMap<String, User> users = MessageServer.users;
 		User opponent_user = users.get(bodyData);
 		
 		if (user != null) {

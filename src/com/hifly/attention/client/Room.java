@@ -3,7 +3,8 @@ package com.hifly.attention.client;
 import java.util.UUID;
 import java.util.Vector;
 
-import com.hifly.attention.serverCore.Server;
+import com.hifly.attention.serverCore.MessageServer;
+import com.hifly.attention.values.Protocol;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +22,11 @@ public class Room {
 	private Vector<String> users;
 
 	public Room() {
-		roomUuid = UUID.randomUUID().toString().replace("-", "");
+		//roomUuid = UUID.randomUUID().toString().replace("-", "");
+	}
+	
+	public Room(String roomUuid) {
+		this.roomUuid = roomUuid;
 	}
 
 	public void addUser(String Uuid) {
@@ -30,7 +35,7 @@ public class Room {
 
 	public void broadcast(String message) {
 		for (int i = 0; i < users.size(); i++) {
-			User user = Server.users.get(users.get(i));
+			User user = MessageServer.users.get(users.get(i));
 			user.sendUTF(message);
 		}
 	}
@@ -39,14 +44,13 @@ public class Room {
 		for (int i = 0; i < users.size(); i++) {
 			if (users.get(i).equals(Uuid)) {
 				users.remove(i);
-				return "userRemove";
+				return Protocol.USER_REMOVE_PROTOCOL;
 			}
 		}
 
 		if (users.size() == 0) {
-			return "roomRemove";
+			return Protocol.ROOM_REMOVE_PROTOCOL;
 		}
-
-		return "fali";
+		return Protocol.ROOM_FAIL_PROTOCOL;
 	}
 }

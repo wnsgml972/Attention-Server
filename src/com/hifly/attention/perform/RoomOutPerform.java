@@ -1,11 +1,13 @@
 package com.hifly.attention.perform;
 
+import java.util.Iterator;
+
+import com.hifly.attention.client.Room;
 import com.hifly.attention.client.User;
 import com.hifly.attention.debuger.Debuger;
-import com.hifly.attention.serverCore.Server;
+import com.hifly.attention.serverCore.MessageServer;
 import com.hifly.attention.serverCore.SignalKey;
 import com.hifly.attention.serverCore.SignalPerform;
-import com.hifly.attention.values.Protocol;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +29,30 @@ public class RoomOutPerform implements SignalPerform {
 		
 		String roomUuid = bodyData;
 		
-		Server.removeRooms(user.getUuid(), roomUuid);
+		removeRooms(user.getUuid(), roomUuid);
+	}
+	
+	/* Use Database */
+	private void removeRooms(String userUuid, String roomUuid){ 
+		Iterator<String> it = MessageServer.rooms.keySet().iterator();
+		while(it.hasNext()){
+			String key = it.next();
+			Room room = MessageServer.rooms.get(key);
+			if(roomUuid.equals(room.getRoomUuid())){
+				
+				String result = room.removeUser(userUuid);	//유저 제거
+				
+				if(result.equals("userRemove")){
+					MessageServer.rooms.put(roomUuid, room);	//room 최신화
+					Debuger.log("Server", "remove User success");
+				}
+				else if(result.equals("roomRemove")){
+					MessageServer.rooms.remove(roomUuid);
+					Debuger.log("Server", "remove Room success");
+				}else{
+					Debuger.log("Server", "remove User fail");
+				}
+			}
+		}
 	}
 }

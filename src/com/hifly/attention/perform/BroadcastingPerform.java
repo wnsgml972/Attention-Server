@@ -4,10 +4,9 @@ import java.util.Iterator;
 
 import com.hifly.attention.client.User;
 import com.hifly.attention.debuger.Debuger;
-import com.hifly.attention.serverCore.Server;
+import com.hifly.attention.serverCore.MessageServer;
 import com.hifly.attention.serverCore.SignalKey;
 import com.hifly.attention.serverCore.SignalPerform;
-import com.hifly.attention.values.Protocol;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -30,10 +29,10 @@ public class BroadcastingPerform implements SignalPerform {
 	}
 	
 	private void broadcast(String message){
-		Iterator<String> it = Server.users.keySet().iterator();
+		Iterator<String> it = MessageServer.users.keySet().iterator();
 		
 		while(it.hasNext()){
-			User user = Server.users.get(it.next());
+			User user = MessageServer.users.get(it.next());
 			user.sendUTF(message);
 		}
 	}

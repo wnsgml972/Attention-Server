@@ -1,4 +1,4 @@
-package com.hifly.attention.userDAO;
+package com.hifly.attention.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 import com.hifly.attention.client.User;
+import com.hifly.attention.debuger.Debuger;
 
 public class UserDAO 
 {
@@ -37,71 +38,14 @@ public class UserDAO
 			// 데이터베이스 연결정보를 이용해 Connection 인스턴스 확보
 			conn = DriverManager.getConnection(jdbc_url, user, password);
 
-		} catch (Exception e) 
+		} catch (ClassNotFoundException e) 
 		{
-			System.out.println(e);
+			Debuger.printError(e);
+		} catch (SQLException e) 
+		{
+			Debuger.printError(e);
 		}
-	}
-	
-/*	public User search(String userID, String userPW)
-	{
-		String sql = "select * from user where userID=? and userPW=?";
-		User user;
-		
-		// select 를 수행하면 데이터정보가 ResultSet 클래스의 인스턴스로 리턴됨.		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userID);
-			pstmt.setString(2, userPW);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next())
-			{
-				if(rs.getString(4).equals("true"))	//만약 로그인 중이면 끝남
-					return null;
-				
-				user.setUserID(rs.getString(1));
-				user.setPassword(rs.getString(2));
-				user.setEmail(rs.getString(3));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-				
-		return user;
-	}
-	
-		public void login(String userID)
-	{
-		String sql = "update user set login_check=? where userID=?";
-		
-		// select 를 수행하면 데이터정보가 ResultSet 클래스의 인스턴스로 리턴됨.		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "true");
-			pstmt.setString(2, userID);
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	public void logout(String userID)
-	{
-		String sql = "update user set login_check=? where userID=?";
-		
-		// select 를 수행하면 데이터정보가 ResultSet 클래스의 인스턴스로 리턴됨.		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "false");
-			pstmt.setString(2, userID);
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
-	
+	}	
 	
 	public void updateTime(String uuid)
 	{
@@ -114,8 +58,8 @@ public class UserDAO
 			pstmt.setString(2, uuid);
 			pstmt.executeUpdate();
 			
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			Debuger.printError(e);
 		}
 	}
 	
@@ -138,13 +82,12 @@ public class UserDAO
 				user.setName(rs.getString("name"));
 				user.setIp(rs.getString("ip"));
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			Debuger.printError(e);
 		}
 		return user;
 	}
-	
-	
+
 	public HashMap<String, User> getUsers(){
 		
 		String sql = "select * from user";
@@ -167,8 +110,8 @@ public class UserDAO
 
 				users.put(user.getUuid(), user);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			Debuger.printError(e);
 		}
 		return users;
 	}
@@ -188,8 +131,8 @@ public class UserDAO
 			pstmt.setString(6, null);
 			pstmt.executeUpdate();
 			
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			Debuger.printError(e);
 			return false;
 		}
 		return true;
@@ -202,7 +145,7 @@ public class UserDAO
 			pstmt.close();
 			conn.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Debuger.printError(e);
 		}
 	}
 }

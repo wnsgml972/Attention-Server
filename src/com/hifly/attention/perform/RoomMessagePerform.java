@@ -2,7 +2,7 @@ package com.hifly.attention.perform;
 
 import com.hifly.attention.client.User;
 import com.hifly.attention.debuger.Debuger;
-import com.hifly.attention.serverCore.Server;
+import com.hifly.attention.serverCore.MessageServer;
 import com.hifly.attention.serverCore.SignalKey;
 import com.hifly.attention.serverCore.SignalPerform;
 import com.hifly.attention.values.Protocol;
@@ -31,6 +31,6 @@ public class RoomMessagePerform implements SignalPerform {
 		String roomUuid = split[0];
 		String messageVal = split[1];
 		
-		Server.rooms.get(roomUuid).broadcast(messageVal);
+		MessageServer.rooms.get(roomUuid).broadcast(messageVal);
 	}
 }

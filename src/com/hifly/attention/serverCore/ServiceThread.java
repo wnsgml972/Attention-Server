@@ -37,8 +37,7 @@ public class ServiceThread extends Thread {
 		signalPerformHashMap.put(Protocol.ROOM_OUT_PROTOCOL, new RoomOutPerform(user));
 		signalPerformHashMap.put(Protocol.CALLING_PROTOCOL, new CallingPerform(user));
 		signalPerformHashMap.put(Protocol.BROADCAST_PROTOCOL, new BroadcastingPerform(user));
-		signalPerformHashMap.put(Protocol.COME_AGAIN_PROTOCOL, new ComeAgainPerform(user));
-		
+		signalPerformHashMap.put(Protocol.COME_AGAIN_PROTOCOL, new ComeAgainPerform(user));		
 	}
 	
 	public void run() {
@@ -46,7 +45,7 @@ public class ServiceThread extends Thread {
 			String message = user.readUTF();
 			Debuger.log(this.toString(), "Init message  :  " + message);
 			if (message == null) {
-				//Server.users.remove(user);
+				
 				user.disConnection(); //´Ü¼øÈ÷ ¼ÒÄÏ¸¸ ²÷À½
 				Debuger.log(this.toString(), "  ¼ÒÄÏ ²÷±è!!");
 				Debuger.log(this.toString(), "Thread : " + Thread.activeCount());
@@ -54,7 +53,6 @@ public class ServiceThread extends Thread {
 				return;
 			}
 			
-
 			SignalKey signalKey = new SignalKey();
 			String headerProtocol = message.split(Protocol.SPLIT_MESSAGE)[0];
 			String bodyData = message.substring(headerProtocol.length() + Protocol.SPLIT_MESSAGE.length());
