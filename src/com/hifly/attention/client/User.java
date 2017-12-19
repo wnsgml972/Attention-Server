@@ -19,12 +19,14 @@ public class User {
 	private String name;
 	private String tel;
 	private String stateMessage;
-	private final String ip;
+	private String ip;
 	
 	private Socket socket;
 	private DataInputStream dis;
 	private DataOutputStream dos;
 
+	public User() { }
+	
 	public User(Socket socket) {
 		this.socket = socket;
 		this.ip = socket.getInetAddress().getHostAddress();
@@ -36,6 +38,8 @@ public class User {
 			Debuger.printError(e);
 		}
 	}
+	
+
 	
 	public void sendInt(int port) {
 		try {
@@ -68,5 +72,12 @@ public class User {
 		} catch (IOException e) {
 			Debuger.printError(e);
 		}
+	}
+	
+	public void cloneUser(User user){
+		uuid = user.getUuid();
+		name = user.getName();
+		tel = user.getTel();
+		stateMessage = user.getStateMessage();
 	}
 }

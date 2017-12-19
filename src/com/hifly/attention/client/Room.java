@@ -13,7 +13,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Room {
-	
 	private String roomUuid;
 	private String title;
 	private String content;

@@ -9,10 +9,11 @@ import java.util.Iterator;
 import com.hifly.attention.client.Room;
 import com.hifly.attention.client.User;
 import com.hifly.attention.debuger.Debuger;
+import com.hifly.attention.userDAO.UserDAO;
 import com.hifly.attention.values.UnChangableValues;
 
 public class Server {
-
+	
 	private ServerSocket serverSocket;
 	public static HashMap<String, User> users;
 	public static HashMap<String, Room> rooms;
@@ -26,10 +27,9 @@ public class Server {
 		try {
 			serverSocket = new ServerSocket(UnChangableValues.SERVER_PORT);
 			users = new HashMap<String, User>();
-			
-			/*
-			 * 데이터 베이스 부분
-			 * */
+						
+			/* Init HashUser */
+			users = UserDAO.getInstance().getUsers();
 			
 		} catch (IOException e) {
 			Debuger.printError(e);
