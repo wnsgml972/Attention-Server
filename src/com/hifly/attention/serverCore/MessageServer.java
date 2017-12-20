@@ -32,7 +32,8 @@ public class MessageServer {
 		try {
 			serverSocket = new ServerSocket(UnChangableValues.MESSAGE_SERVER_PORT);
 			users = new HashMap<String, User>();
-						
+			rooms = new HashMap<String, Room>();
+			
 			/* Init HashUser */
 			users = UserDAO.getInstance().getUsers();
 			
@@ -45,7 +46,7 @@ public class MessageServer {
 		while(true) {
 			Socket messageSocket;
 			try {
-				Debuger.log(this.toString(), "\n\nListen");
+				Debuger.log(this.toString(), "\n\nMessage Listen");
 				messageSocket = serverSocket.accept();
 				Debuger.log(this.toString(), "Accept! messageSocket" + messageSocket.getInetAddress().getHostAddress() + "님이 접속하였습니다.");
 				ServiceThread serviceThread = new ServiceThread(messageSocket);

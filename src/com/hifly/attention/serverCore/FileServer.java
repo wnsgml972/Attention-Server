@@ -47,7 +47,6 @@ public class FileServer extends Thread{
 					User user = MessageServer.users.get(val);
 					if(ip.equals(user.getIp())){
 						MessageServer.users.get(val).setFileSocket(socket);
-						MessageServer.users.get(val).setFileStream(socket);
 					}
 				}
 				

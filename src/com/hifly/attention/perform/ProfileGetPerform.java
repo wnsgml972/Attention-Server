@@ -1,10 +1,6 @@
 package com.hifly.attention.perform;
 
-import java.net.Socket;
-import java.util.UUID;
-
 import com.hifly.attention.client.User;
-import com.hifly.attention.dao.UserFriendsDAO;
 import com.hifly.attention.dao.UserProfilesDAO;
 import com.hifly.attention.debuger.Debuger;
 
@@ -23,11 +19,10 @@ public class ProfileGetPerform implements SignalPerform {
 
 	public ProfileGetPerform(User user) {
 		this.user = user;
-
 	}
 	
 	@Override
-	public void performAction(SignalKey signalKey) {		
+	public void performAction(SignalKey signalKey) {
 		String bodyData = signalKey.getBodyData();
 		Debuger.log(this.toString(), bodyData);
 		

@@ -6,6 +6,7 @@ import java.util.Vector;
 import com.hifly.attention.serverCore.MessageServer;
 import com.hifly.attention.values.Protocol;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,16 +14,25 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 public class Room {
 	private String roomUuid;
-	private String title;
-	private String content;
 	private String time;
+	private String senderName;
+	private String chatContent;
+	private String senderUuid;
 	
 	private Vector<String> users;
 
-	public Room() {
-		//roomUuid = UUID.randomUUID().toString().replace("-", "");
+	public Room() { }
+	
+	public Room(String roomUuid, String time, String senderName, String chatContent, String senderUuid) {
+		this.roomUuid = roomUuid;
+		this.time = time;
+		this.senderName = senderName;
+		this.chatContent = chatContent;
+		this.senderUuid = senderUuid;
+		users = new Vector<String>();
 	}
 	
 	public Room(String roomUuid) {
@@ -53,4 +63,8 @@ public class Room {
 		}
 		return Protocol.ROOM_FAIL_PROTOCOL;
 	}
+
+
+
+
 }

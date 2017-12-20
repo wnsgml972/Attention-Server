@@ -32,6 +32,8 @@ public class ComeAgainPerform implements SignalPerform {
 		User tempUser = UserDAO.getInstance().getUser(uuid);		
 		user.cloneUser(tempUser);
 		
+		MessageServer.users.get(user.getUuid()).setMessageSocket(user.getMessageSocket());
+		
 		UserDAO.getInstance().updateTime(uuid);
 	}
 }

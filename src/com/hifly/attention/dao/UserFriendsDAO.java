@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.hifly.attention.client.User;
 import com.hifly.attention.debuger.Debuger;
 
 public class UserFriendsDAO
@@ -45,6 +46,28 @@ public class UserFriendsDAO
 		}
 	}
 	
+	public String[] getFirstRoomUuid(String p2p_chat_uuid)
+	{
+		String sql = "select * from user_friends where p2p_chat_uuid=?";
+		String[] result = new String[2];
+		
+		// select 를 수행하면 데이터정보가 ResultSet 클래스의 인스턴스로 리턴됨.		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, p2p_chat_uuid);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				result[0] = rs.getString("uuid");
+				result[1] = rs.getString("friend_uuid");
+			}
+		} catch (SQLException e) {
+			Debuger.printError(e);
+		}
+		return result;
+	}
+	
 	public void insertUserFriends(String uuid, String friend_uuid)
 	{
 		String sql = "insert into user_friends(uuid, friend_uuid) values(?,?)";
@@ -82,21 +105,19 @@ public class UserFriendsDAO
 		return result;
 	}
 	
-	public void insertP2PChatUuid(String uuid, String friend_uuid) {
+	public void insertP2PChatUuid(String uuid, String friend_uuid, String p2pChatUuid) {
 		
 		String sql = "update user_friends set p2p_chat_uuid=? where uuid=? and friend_uuid=?";
 		
 		// select 를 수행하면 데이터정보가 ResultSet 클래스의 인스턴스로 리턴됨.		
 		try {
+			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, uuid);
-			pstmt.setString(2, friend_uuid);
-			pstmt.executeUpdate();
-						
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, friend_uuid);
+			pstmt.setString(1, p2pChatUuid);
 			pstmt.setString(2, uuid);
+			pstmt.setString(3, friend_uuid);
 			pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			Debuger.printError(e);
 		}

@@ -23,7 +23,7 @@ public class UserFriendsRequestPerform implements SignalPerform {
 	private User user;
 	
 	public UserFriendsRequestPerform(User user) {
-		this.user = user;		
+		this.user = user;
 	}
 	
 	@Override
@@ -50,19 +50,23 @@ public class UserFriendsRequestPerform implements SignalPerform {
 					String mName = muser.getName();
 					String mTel = muser.getTel();
 					String mStateMessage = muser.getStateMessage();
-					String p2pChatUuid = UserFriendsDAO.getInstance().getP2PChatUuid(userUuid, mUuid);
 					
-					if(p2pChatUuid == null){
+					String p2pChatUuid = UserFriendsDAO.getInstance().getP2PChatUuid(userUuid, mUuid);
+										
+					if(p2pChatUuid == null || p2pChatUuid.equals("") || p2pChatUuid.equals("null")){
+						UserFriendsDAO.getInstance().insertUserFriends(userUuid, mUuid);
+						UserFriendsDAO.getInstance().insertUserFriends(mUuid, userUuid);
+
 						p2pChatUuid = UUID.randomUUID().toString().replace("-", "");
 						// 양쪽 다 업데이트
-						UserFriendsDAO.getInstance().insertP2PChatUuid(userUuid, mUuid);
+						UserFriendsDAO.getInstance().insertP2PChatUuid(userUuid, mUuid, p2pChatUuid);
+						UserFriendsDAO.getInstance().insertP2PChatUuid(mUuid, userUuid, p2pChatUuid);
 					}
 					
 					sb.append(userUuid + Protocol.SPLIT_MESSAGE + mName + Protocol.SPLIT_MESSAGE + mTel
 					+ Protocol.SPLIT_MESSAGE + mStateMessage + Protocol.SPLIT_MESSAGE 
 					+ p2pChatUuid + Protocol.SPLIT_MESSAGE);
 					
-					UserFriendsDAO.getInstance().insertUserFriends(userUuid, mUuid);
 				}
 			}
 		}

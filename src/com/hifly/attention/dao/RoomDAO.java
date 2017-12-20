@@ -76,9 +76,8 @@ public class RoomDAO
 			while(rs.next())
 			{
 				room.setRoomUuid(rs.getString("room_uuid"));
-				room.setContent(rs.getString("content"));
+				room.setChatContent(rs.getString("content"));
 				room.setTime(rs.getString("time"));
-				room.setTitle(rs.getString("title"));
 			}
 		} catch (SQLException e) {
 			Debuger.printError(e);
@@ -101,9 +100,8 @@ public class RoomDAO
 			{
 				Room room = new Room();
 				room.setRoomUuid(rs.getString("room_uuid"));
-				room.setContent(rs.getString("content"));
+				room.setChatContent(rs.getString("content"));
 				room.setTime(rs.getString("time"));
-				room.setTitle(rs.getString("title"));
 
 				rooms.put(room.getRoomUuid(), room);
 			}
@@ -113,17 +111,19 @@ public class RoomDAO
 		return rooms;
 	}
 	
-	public boolean insertRoom(String room_uuid, String content, String time, String title)
+	public boolean insertRoom(String room_uuid, String time, String sender_name, String chat_content, String sender_uuid)
 	{
-		String sql = "insert into room values(?,?,?,?)";
+		String sql = "insert into room values(?,?,?,?,?)";
 		
 		// select 를 수행하면 데이터정보가 ResultSet 클래스의 인스턴스로 리턴됨.		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, room_uuid);
-			pstmt.setString(2, content);
-			pstmt.setString(3, time);
-			pstmt.setString(4, title);
+			pstmt.setString(2, time);
+			pstmt.setString(3, sender_name);
+			pstmt.setString(4, chat_content);
+			pstmt.setString(5, sender_uuid);
+			
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {

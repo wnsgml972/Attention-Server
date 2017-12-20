@@ -45,16 +45,16 @@ public class UserProfilesDAO
 		}
 	}
 	
-	public boolean insertUserProfiles(String uuid, String profile_url)
+	public boolean insertUserProfiles(String uuid, String profile_url, String profile_name)
 	{
-		String sql = "insert into user_profiles values(?,?)";
+		String sql = "insert into user_profiles values(?,?,?)";
 		
 		// select 를 수행하면 데이터정보가 ResultSet 클래스의 인스턴스로 리턴됨.		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, uuid);
 			pstmt.setString(2, profile_url);
-			
+			pstmt.setString(3, profile_name);
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -63,6 +63,27 @@ public class UserProfilesDAO
 		}
 		
 		return true;
+	}
+	
+	public String getFirstRoomUuid(String uuid)
+	{
+		String sql = "select profile_url from user_profiles where uuid=?";
+		
+		String result = null;
+		// select 를 수행하면 데이터정보가 ResultSet 클래스의 인스턴스로 리턴됨.		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, uuid);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				result = rs.getString("profile_url");
+			}
+		} catch (SQLException e) {
+			Debuger.printError(e);
+		}
+		return result;
 	}
 	
 	public void updateUserProfilesURL(String uuid, String profile_url)
