@@ -13,21 +13,21 @@ public interface Protocol {
 	public static final String CHATTING_MESSAGE_PROTOCOL = "CHATTING_MESSAGE_PROTOCOL";
 	public static final String BROADCAST_PROTOCOL = "BROADCAST_PROTOCOL";
 	
-	//
-	public static final String PROFILE_INSERT_PROTOCOL = "PROFILE_INSERT_PROTOCOL";
-	public static final String PROFILE_GET_PROTOCOL = "PROFILE_GET_PROTOCOL";
-	
+	public static final String PROFILE_GET_PROTOCOL = "PROFILE_GET_PROTOCOL";	
 	public static final String USER_REMOVE_PROTOCOL = "USER_REMOVE_PROTOCOL";
 	public static final String ROOM_REMOVE_PROTOCOL = "ROOM_REMOVE_PROTOCOL";
 	public static final String ROOM_FAIL_PROTOCOL = "ROOM_FAIL_PROTOCOL";
-	public static final String ROOM_FILE_PROTOCOL = "ROOM_FILE_PROTOCOL";
-	//
-	
-	public static final String ROOM_OUT_PROTOCOL = "ROOM_OUT_PROTOCOL"; //@@
-	public static final String CALLING_PROTOCOL = "CALLING_PROTOCOL"; //@@
+	public static final String ROOM_IN_PROTOCOL = "ROOM_IN_PROTOCOL";
 
 	
+	public static final String ROOM_FILE_PROTOCOL = "ROOM_FILE_PROTOCOL"; 
+	public static final String PROFILE_INSERT_PROTOCOL = "PROFILE_INSERT_PROTOCOL";
 
+	public static final String PROFILE_GO = "PROFILE_GO";
+	
+	public static final String ROOM_OUT_PROTOCOL = "ROOM_OUT_PROTOCOL"; 
+	public static final String CALLING_PROTOCOL = "CALLING_PROTOCOL"; 
+
+	
 	public static final String SPLIT_MESSAGE = "@SEGMENT@";
-
 }

@@ -57,8 +57,10 @@ public class Chatting_MessagePerform implements SignalPerform {
 		}else { //add
 			
 		}
-		
+				
+		Debuger.log(toString(), "size " + MessageServer.rooms.get(roomUuid).getUsers().size());
 		//온 방식대로 브로드캐스팅
+
 		MessageServer.rooms.get(roomUuid).broadcast(signalKey.getHeaderProtocol() + Protocol.SPLIT_MESSAGE + signalKey.getBodyData());
 	}
 }

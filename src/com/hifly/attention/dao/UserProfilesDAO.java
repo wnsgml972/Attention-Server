@@ -121,6 +121,27 @@ public class UserProfilesDAO
 		}
 		return result;
 	}
+	
+	public String getUserProfilesName(String uuid)
+	{
+		String sql = "select profile_name from user_profiles where uuid=?";
+		
+		String result = null;
+		// select 를 수행하면 데이터정보가 ResultSet 클래스의 인스턴스로 리턴됨.		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, uuid);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				result = rs.getString("profile_name");
+			}
+		} catch (SQLException e) {
+			Debuger.printError(e);
+		}
+		return result;
+	}
 
 	
 	public void end()

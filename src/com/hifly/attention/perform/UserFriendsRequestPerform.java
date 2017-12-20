@@ -63,7 +63,7 @@ public class UserFriendsRequestPerform implements SignalPerform {
 						UserFriendsDAO.getInstance().insertP2PChatUuid(mUuid, userUuid, p2pChatUuid);
 					}
 					
-					sb.append(userUuid + Protocol.SPLIT_MESSAGE + mName + Protocol.SPLIT_MESSAGE + mTel
+					sb.append(mUuid + Protocol.SPLIT_MESSAGE + mName + Protocol.SPLIT_MESSAGE + mTel
 					+ Protocol.SPLIT_MESSAGE + mStateMessage + Protocol.SPLIT_MESSAGE 
 					+ p2pChatUuid + Protocol.SPLIT_MESSAGE);
 					

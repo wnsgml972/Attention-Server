@@ -9,7 +9,10 @@ import com.hifly.attention.perform.BroadcastingPerform;
 import com.hifly.attention.perform.CallingPerform;
 import com.hifly.attention.perform.Chatting_MessagePerform;
 import com.hifly.attention.perform.ComeAgainPerform;
-
+import com.hifly.attention.perform.ProfileGetPerform;
+import com.hifly.attention.perform.ProfileInsertPerform;
+import com.hifly.attention.perform.RoomFilePerform;
+import com.hifly.attention.perform.RoomInPerform;
 import com.hifly.attention.perform.RoomOutPerform;
 import com.hifly.attention.perform.UserEnrollPerform;
 import com.hifly.attention.perform.UserFriendsRequestPerform;
@@ -31,12 +34,16 @@ public class ServiceThread extends Thread {
 		//Put Perform Class
 		signalPerformHashMap.put(Protocol.USER_ENROLL_PROTOCOL, new UserEnrollPerform(user));
 		signalPerformHashMap.put(Protocol.USER_FRIENDS_REQUEST_PROTOCOL, new UserFriendsRequestPerform(user));
-		signalPerformHashMap.put(Protocol.ROOM_OUT_PROTOCOL, new RoomOutPerform(user));
-		signalPerformHashMap.put(Protocol.CALLING_PROTOCOL, new CallingPerform(user));
-		signalPerformHashMap.put(Protocol.BROADCAST_PROTOCOL, new BroadcastingPerform(user));
 		signalPerformHashMap.put(Protocol.COME_AGAIN_PROTOCOL, new ComeAgainPerform(user));	
-		signalPerformHashMap.put(Protocol.CHATTING_MESSAGE_PROTOCOL, new Chatting_MessagePerform(user));				
-		
+		signalPerformHashMap.put(Protocol.CHATTING_MESSAGE_PROTOCOL, new Chatting_MessagePerform(user));
+		signalPerformHashMap.put(Protocol.ROOM_OUT_PROTOCOL, new RoomOutPerform(user)); 
+		signalPerformHashMap.put(Protocol.CALLING_PROTOCOL, new CallingPerform(user)); 
+		signalPerformHashMap.put(Protocol.BROADCAST_PROTOCOL, new BroadcastingPerform(user));
+		signalPerformHashMap.put(Protocol.PROFILE_INSERT_PROTOCOL, new ProfileInsertPerform(user));
+		signalPerformHashMap.put(Protocol.PROFILE_GET_PROTOCOL, new ProfileGetPerform(user));
+		signalPerformHashMap.put(Protocol.ROOM_FILE_PROTOCOL, new RoomFilePerform(user));
+		signalPerformHashMap.put(Protocol.ROOM_IN_PROTOCOL, new RoomInPerform(user));
+
 	}
 	
 	public void run() {
@@ -58,7 +65,7 @@ public class ServiceThread extends Thread {
 			signalKey.setHeaderProtocol(headerProtocol);
 			signalKey.setBodyData(bodyData);
 			Debuger.log(this.toString(), "Init protocol header  :  " + headerProtocol);
-			Debuger.log(this.toString(), "Init body data  :  " + bodyData);
+			Debuger.log(this.toString(), "Init body data  :  " + bodyData + "\n\n");
 			
 			SignalPerform performClass = signalPerformHashMap.get(headerProtocol);
 			performClass.performAction(signalKey);

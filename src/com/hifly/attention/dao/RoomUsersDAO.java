@@ -48,7 +48,7 @@ public class RoomUsersDAO
 	public void insertRoomUsers(String room_uuid, String user_uuid)
 	{
 		String sql = "insert into room_users values(?,?)";
-		
+		Debuger.log(toString(), room_uuid + "   " + user_uuid);
 		// select 를 수행하면 데이터정보가 ResultSet 클래스의 인스턴스로 리턴됨.		
 		try {
 			pstmt = conn.prepareStatement(sql);

@@ -3,6 +3,7 @@ package com.hifly.attention.client;
 import java.util.UUID;
 import java.util.Vector;
 
+import com.hifly.attention.debuger.Debuger;
 import com.hifly.attention.serverCore.MessageServer;
 import com.hifly.attention.values.Protocol;
 
@@ -24,7 +25,7 @@ public class Room {
 	
 	private Vector<String> users;
 
-	public Room() { }
+	public Room() { users = new Vector<String>(); }
 	
 	public Room(String roomUuid, String time, String senderName, String chatContent, String senderUuid) {
 		this.roomUuid = roomUuid;
@@ -37,8 +38,9 @@ public class Room {
 	
 	public Room(String roomUuid) {
 		this.roomUuid = roomUuid;
+		users = new Vector<String>();
 	}
-
+	
 	public void addUser(String Uuid) {
 		users.add(Uuid);
 	}
@@ -47,6 +49,14 @@ public class Room {
 		for (int i = 0; i < users.size(); i++) {
 			User user = MessageServer.users.get(users.get(i));
 			user.sendUTF(message);
+		}
+		Debuger.log(toString(), "Room BroadCasting ¼º°ø!");
+	}
+	
+	public void broadcastFile() {
+		for (int i = 0; i < users.size(); i++) {
+			User user = MessageServer.users.get(users.get(i));
+			user.profileSend(user.getUuid(), "C:/Users/hscom-018/git/Attention-Server/profiles", "roomFile" + i + ".png");
 		}
 	}
 

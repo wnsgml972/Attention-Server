@@ -1,7 +1,5 @@
 package com.hifly.attention.perform;
 
-import java.util.HashMap;
-
 import com.hifly.attention.client.User;
 import com.hifly.attention.debuger.Debuger;
 import com.hifly.attention.serverCore.MessageServer;
@@ -26,14 +24,19 @@ public class CallingPerform implements SignalPerform {
 	public void performAction(SignalKey signalKey) {
 		String bodyData = signalKey.getBodyData();
 		Debuger.log(this.toString(), bodyData);
-		HashMap<String, User> users = MessageServer.users;
-		User opponent_user = users.get(bodyData);
+		
+		String split[] = bodyData.split(Protocol.SPLIT_MESSAGE);
+		String opponent_uuid = split[0];
+		User opponent_user = MessageServer.users.get(opponent_uuid);
 		
 		if (user != null) {
-			user.sendUTF(opponent_user.getIp());
+			user.sendUTF(Protocol.CALLING_PROTOCOL + Protocol.SPLIT_MESSAGE + opponent_user.getIp() + Protocol.SPLIT_MESSAGE);
 		} else {
+			Debuger.log(toString(), "Why null???");
 			user.sendUTF(null);
 		}
-		opponent_user.sendUTF("callToMe" + Protocol.SPLIT_MESSAGE + user.getName() + Protocol.SPLIT_MESSAGE + user.getIp());
+		
+		opponent_user.sendUTF(Protocol.CALLING_PROTOCOL + Protocol.SPLIT_MESSAGE
+				+ user.getIp() + Protocol.SPLIT_MESSAGE + user.getName() + Protocol.SPLIT_MESSAGE);
 	}
 }
